@@ -236,20 +236,21 @@ function renderScatter() {
 }
 
 /* 4 KEEPER */
-function renderKeeper() {
-  const data = window.HEALY_DATA.keeper_comparison.t20;
+function renderKeeperComparison(format) {
+  const data = window.HEALY_DATA.era_comparison[format];
   const years = Object.keys(data).sort();
 
   const healy = [];
-  const avg = [];
+  const others = [];
 
   years.forEach(y => {
-    const arr = data[y];
-    const h = arr.find(p => p.is_healy);
-    const a = arr.reduce((s,p)=>s+p.sr,0)/arr.length;
+    const players = data[y];
+
+    const h = players.find(p => p.is_healy);
+    const avg = players.reduce((s,p)=>s+p.sr,0)/players.length;
 
     healy.push(h ? h.sr : null);
-    avg.push(a);
+    others.push(avg);
   });
 
   charts.keeper = new Chart(document.getElementById('keeperChart'), {
@@ -257,8 +258,8 @@ function renderKeeper() {
     data: {
       labels: years,
       datasets: [
-        { label: 'Healy', data: healy, borderColor: 'gold' },
-        { label: 'Others', data: avg, borderColor: 'grey' }
+        { label: 'Healy', data: healy, borderColor: '#FFCD00' },
+        { label: 'Others avg', data: others, borderColor: '#888' }
       ]
     }
   });
