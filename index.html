@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alyssa Healy — The Aggression Pioneer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./css/style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+</head>
+<body>
+<div class="page">
+  <div class="topbar">
+    <div class="topbar-label">Data · Cricsheet · by <a href="https://x.com/eyarkai26" target="_blank" style="color: inherit; text-decoration: none;">@eyarkai26</a></div>
+    <div class="theme-toggle" onclick="toggleTheme()">
+      <span class="toggle-icon" id="toggleIcon">☀</span>
+      <span id="toggleLabel">Light mode</span>
+    </div>
+  </div>
+
+  <div class="hero">
+    <div class="hero-content">
+      <div class="hero-label">Happy Birthday</div>
+      <h1>Alyssa Healy</h1>
+      <div class="hero-subtitle">The Aggression Pioneer</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>Career Timeline</h2>
+      <p class="section-desc">Strike rate evolution across formats (2010–2026)</p>
+    </div>
+    <div class="toggle-group">
+      <button class="toggle-btn active" onclick="switchFormat('t20', this)">T20s</button>
+      <button class="toggle-btn" onclick="switchFormat('odi', this)">ODIs</button>
+    </div>
+    <div class="chart-wrap"><canvas id="timelineChart"></canvas></div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <h2>Outpacing the Era</h2>
+      <p class="section-desc">Healy's strike rate vs average of top 10 run-scorers each year</p>
+    </div>
+    <div class="toggle-group">
+      <button class="toggle-btn active" onclick="switchEraFormat('t20', this)">T20s</button>
+      <button class="toggle-btn" onclick="switchEraFormat('odi', this)">ODIs</button>
+    </div>
+    <div class="chart-wrap"><canvas id="eraChart"></canvas></div>
+  </div>
+
+  <div class="footer">Made with 💙 for Alyssa Healy's birthday.</div>
+</div>
+
+<script src="./js/viz.js"></script>
+<script>
+  fetch('./data/healy_viz_data.json')
+    .then(r => r.json())
+    .then(data => {
+      window.HEALY_DATA = data;
+      init();
+    });
+</script>
+</body>
+</html>
