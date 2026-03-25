@@ -7,6 +7,11 @@ function init() {
   console.log('Data loaded:', window.HEALY_DATA);
   renderTimeline('t20');
   renderEraComparison('t20');
+  renderScatter();
+  renderKeeperComparison('t20');
+  renderPowerplay('t20');
+  renderPeakInnings();
+  renderTable();
 }
 
 function toggleTheme() {
@@ -212,4 +217,98 @@ function renderEraComparison(format) {
       }
     }
   });
+}
+
+/* 3 SCATTER */
+function renderScatter() {
+  const data = window.HEALY_DATA.career_timeline.t20;
+
+  charts.scatter = new Chart(document.getElementById('scatterChart'), {
+    type: 'scatter',
+    data: {
+      datasets: [{
+        label: 'Seasons',
+        data: data.map(d => ({ x: d.runs, y: d.sr })),
+        backgroundColor: 'gold'
+      }]
+    }
+  });
+}
+
+/* 4 KEEPER */
+function renderKeeper() {
+  const data = window.HEALY_DATA.keeper_comparison.t20;
+  const years = Object.keys(data).sort();
+
+  const healy = [];
+  const avg = [];
+
+  years.forEach(y => {
+    const arr = data[y];
+    const h = arr.find(p => p.is_healy);
+    const a = arr.reduce((s,p)=>s+p.sr,0)/arr.length;
+
+    healy.push(h ? h.sr : null);
+    avg.push(a);
+  });
+
+  charts.keeper = new Chart(document.getElementById('keeperChart'), {
+    type: 'line',
+    data: {
+      labels: years,
+      datasets: [
+        { label: 'Healy', data: healy, borderColor: 'gold' },
+        { label: 'Others', data: avg, borderColor: 'grey' }
+      ]
+    }
+  });
+}
+
+/* 5 POWERPLAY */
+function renderPowerplay() {
+  const data = window.HEALY_DATA.powerplay_stats.t20;
+
+  charts.pp = new Chart(document.getElementById('ppChart'), {
+    type: 'bar',
+    data: {
+      labels: data.map(d => d.year),
+      datasets: [
+        { label: 'PP', data: data.map(d => d.pp_sr), backgroundColor: 'gold' },
+        { label: 'Non PP', data: data.map(d => d.non_pp_sr), backgroundColor: 'blue' }
+      ]
+    }
+  });
+}
+
+/* 6 PEAK */
+function renderPeak() {
+  const peaks = window.HEALY_DATA.peak_innings.t20;
+  const container = document.getElementById('peakContainer');
+
+  container.innerHTML = peaks.map(p => `
+    <div class="card">
+      <b>${p.runs} (${p.balls})</b>
+      <div>SR: ${p.sr}</div>
+      <div>${p.opponent}</div>
+    </div>
+  `).join('');
+}
+
+/* 7 TABLE */
+function renderTable() {
+  const data = window.HEALY_DATA.career_timeline.t20;
+  const container = document.getElementById('tableContainer');
+
+  container.innerHTML = `
+    <table>
+      <tr><th>Year</th><th>Runs</th><th>SR</th></tr>
+      ${data.map(d => `
+        <tr>
+          <td>${d.year}</td>
+          <td>${d.runs}</td>
+          <td>${d.sr}</td>
+        </tr>
+      `).join('')}
+    </table>
+  `;
 }

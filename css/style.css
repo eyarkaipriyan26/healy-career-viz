@@ -180,3 +180,24 @@ canvas {
   padding-top: 40px;
   border-top: 1px solid var(--border);
 }
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 10px;
+  margin: 5px;
+  display: inline-block;
+  border-radius: 6px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+td, th {
+  border: 1px solid var(--border);
+  padding: 8px;
+  text-align: center;
+}
