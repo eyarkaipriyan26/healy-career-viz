@@ -282,7 +282,7 @@ function renderPowerplay() {
 }
 
 /* 6 PEAK */
-function renderPeak() {
+function renderPeakInnings() {
   const peaks = window.HEALY_DATA.peak_innings.t20;
   const container = document.getElementById('peakContainer');
 
@@ -297,19 +297,35 @@ function renderPeak() {
 
 /* 7 TABLE */
 function renderTable() {
-  const data = window.HEALY_DATA.career_timeline.t20;
   const container = document.getElementById('tableContainer');
+
+  if (!window.HEALY_DATA?.career_timeline?.t20) {
+    container.innerHTML = "No table data available";
+    return;
+  }
+
+  const data = window.HEALY_DATA.career_timeline.t20;
 
   container.innerHTML = `
     <table>
-      <tr><th>Year</th><th>Runs</th><th>SR</th></tr>
-      ${data.map(d => `
+      <thead>
         <tr>
-          <td>${d.year}</td>
-          <td>${d.runs}</td>
-          <td>${d.sr}</td>
+          <th>Year</th>
+          <th>Runs</th>
+          <th>SR</th>
+          <th>Avg</th>
         </tr>
-      `).join('')}
+      </thead>
+      <tbody>
+        ${data.map(d => `
+          <tr>
+            <td>${d.year}</td>
+            <td>${d.runs}</td>
+            <td>${d.sr}</td>
+            <td>${d.avg}</td>
+          </tr>
+        `).join('')}
+      </tbody>
     </table>
   `;
 }
