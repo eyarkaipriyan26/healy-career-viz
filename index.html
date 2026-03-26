@@ -12,6 +12,8 @@
 </head>
 <body>
 <div class="page">
+  
+  <!-- TOPBAR -->
   <div class="topbar">
     <div class="topbar-label">Data · Cricsheet · by <a href="https://x.com/eyarkai26" target="_blank" style="color: inherit; text-decoration: none;">@eyarkai26</a></div>
     <div class="theme-toggle" onclick="toggleTheme()">
@@ -20,79 +22,128 @@
     </div>
   </div>
 
+  <!-- HERO -->
   <div class="hero">
     <div class="hero-content">
       <div class="hero-label">Happy Birthday</div>
       <h1>Alyssa Healy</h1>
       <div class="hero-subtitle">The Aggression Pioneer</div>
+      <div class="hero-dates">2010 – 2026</div>
     </div>
   </div>
 
-  <div class="section">
+  <!-- 1. CAREER TIMELINE -->
+  <div class="section" id="timelineSection">
     <div class="section-header">
       <h2>Career Timeline</h2>
       <p class="section-desc">Strike rate evolution across formats (2010–2026)</p>
     </div>
     <div class="toggle-group">
-      <button class="toggle-btn active" onclick="switchFormat('t20', this)">T20s</button>
-      <button class="toggle-btn" onclick="switchFormat('odi', this)">ODIs</button>
+      <button class="toggle-btn active" data-format="t20" onclick="switchFormat('t20', this, 'timelineSection')">T20s</button>
+      <button class="toggle-btn" data-format="odi" onclick="switchFormat('odi', this, 'timelineSection')">ODIs</button>
     </div>
-    <div class="chart-wrap"><canvas id="timelineChart"></canvas></div>
+    <div class="chart-wrap">
+      <canvas id="timelineChart"></canvas>
+    </div>
   </div>
 
-  <div class="section">
+  <!-- 2. ERA COMPARISON -->
+  <div class="section" id="eraSection">
     <div class="section-header">
       <h2>Outpacing the Era</h2>
       <p class="section-desc">Healy's strike rate vs average of top 10 run-scorers each year</p>
     </div>
     <div class="toggle-group">
-      <button class="toggle-btn active" onclick="switchEraFormat('t20', this)">T20s</button>
-      <button class="toggle-btn" onclick="switchEraFormat('odi', this)">ODIs</button>
+      <button class="toggle-btn active" data-format="t20" onclick="switchFormat('t20', this, 'eraSection')">T20s</button>
+      <button class="toggle-btn" data-format="odi" onclick="switchFormat('odi', this, 'eraSection')">ODIs</button>
     </div>
-    <div class="chart-wrap"><canvas id="eraChart"></canvas></div>
+    <div class="chart-wrap">
+      <canvas id="eraChart"></canvas>
+    </div>
   </div>
 
-  <!-- 3. SCATTER -->
-<div class="section">
-  <div class="section-header">
-    <h2>SR vs Runs</h2>
+  <!-- 3. SCATTER PLOT -->
+  <div class="section" id="scatterSection">
+    <div class="section-header">
+      <h2>Productive Aggression</h2>
+      <p class="section-desc">Strike rate vs runs — top 10 run-scorers each year</p>
+    </div>
+    <div class="toggle-group">
+      <button class="toggle-btn active" data-format="t20" onclick="switchFormat('t20', this, 'scatterSection')">T20s</button>
+      <button class="toggle-btn" data-format="odi" onclick="switchFormat('odi', this, 'scatterSection')">ODIs</button>
+    </div>
+    <div class="chart-wrap">
+      <canvas id="scatterChart"></canvas>
+    </div>
   </div>
-  <div class="chart-wrap"><canvas id="scatterChart"></canvas></div>
-</div>
 
-<!-- 4. KEEPER -->
-<div class="section">
-  <div class="section-header">
-    <h2>Keeper Comparison</h2>
+  <!-- 4. KEEPER COMPARISON -->
+  <div class="section" id="keeperSection">
+    <div class="section-header">
+      <h2>Redefining the Keeper's Role</h2>
+      <p class="section-desc">Strike rate comparison — wicketkeeper-batters only</p>
+    </div>
+    <div class="toggle-group">
+      <button class="toggle-btn active" data-format="t20" onclick="switchFormat('t20', this, 'keeperSection')">T20s</button>
+      <button class="toggle-btn" data-format="odi" onclick="switchFormat('odi', this, 'keeperSection')">ODIs</button>
+    </div>
+    <div class="chart-wrap">
+      <canvas id="keeperChart"></canvas>
+    </div>
   </div>
-  <div class="chart-wrap"><canvas id="keeperChart"></canvas></div>
-</div>
 
-<!-- 5. POWERPLAY -->
-<div class="section">
-  <div class="section-header">
-    <h2>Powerplay vs Non-Powerplay</h2>
+  <!-- 5. POWERPLAY -->
+  <div class="section" id="ppSection">
+    <div class="section-header">
+      <h2>Powerplay Dominance</h2>
+      <p class="section-desc">Strike rate in powerplay overs vs rest of innings</p>
+    </div>
+    <div class="toggle-group">
+      <button class="toggle-btn active" data-format="t20" onclick="switchFormat('t20', this, 'ppSection')">T20s (overs 1-6)</button>
+      <button class="toggle-btn" data-format="odi" onclick="switchFormat('odi', this, 'ppSection')">ODIs (overs 1-10)</button>
+    </div>
+    <div class="chart-wrap">
+      <canvas id="ppChart"></canvas>
+    </div>
   </div>
-  <div class="chart-wrap"><canvas id="ppChart"></canvas></div>
-</div>
 
-<!-- 6. PEAK -->
-<div class="section">
-  <div class="section-header">
-    <h2>Peak Innings</h2>
+  <!-- 6. PEAK INNINGS -->
+  <div class="section" id="peakSection">
+    <div class="section-header">
+      <h2>Peak Performances</h2>
+      <p class="section-desc">Top 10 innings by strike rate (minimum 30 balls)</p>
+    </div>
+    <div class="toggle-group">
+      <button class="toggle-btn active" data-format="t20" onclick="switchFormat('t20', this, 'peakSection')">T20s</button>
+      <button class="toggle-btn" data-format="odi" onclick="switchFormat('odi', this, 'peakSection')">ODIs</button>
+    </div>
+    <div class="peak-grid" id="peakContainer"></div>
   </div>
-  <div id="peakContainer"></div>
-</div>
 
-<!-- 7. TABLE -->
-<div class="section">
-  <div class="section-header">
-    <h2>Year-wise Summary</h2>
+  <!-- 7. YEAR-BY-YEAR TABLE -->
+  <div class="section" id="tableSection">
+    <div class="section-header">
+      <h2>Year-by-Year Breakdown</h2>
+      <p class="section-desc">Complete career statistics</p>
+    </div>
+    <div class="toggle-group">
+      <button class="toggle-btn active" data-format="t20" onclick="switchFormat('t20', this, 'tableSection')">T20s</button>
+      <button class="toggle-btn" data-format="odi" onclick="switchFormat('odi', this, 'tableSection')">ODIs</button>
+    </div>
+    <div class="table-wrap" id="tableContainer"></div>
   </div>
-  <div id="tableContainer"></div>
-</div>
-  
-  <div class="footer">Made with 💛 for Alyssa Healy's birthday.</div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <strong>About the data</strong><br>
+    All data extracted from Cricsheet (women's T20s and ODIs, 2010–2026).<br>
+    T20s include international matches and domestic leagues (WBBL, WPL, Super League, etc.).<br>
+    Wicketkeeper-batters auto-detected based on dismissals (stumped/caught).<br>
+    Powerplay defined as overs 1–6 (T20s) and overs 1–10 (ODIs).<br>
+    <br>
+    Made with 💛 for Alyssa Healy's birthday.
+  </div>
+
 </div>
 
 <script src="./js/viz.js"></script>
@@ -102,6 +153,10 @@
     .then(data => {
       window.HEALY_DATA = data;
       init();
+    })
+    .catch(err => {
+      console.error('Failed to load data:', err);
+      document.body.innerHTML = '<div style="padding:40px;text-align:center;color:#ff4444;">Failed to load data. Make sure healy_viz_data.json is in the data/ folder.</div>';
     });
 </script>
 </body>
